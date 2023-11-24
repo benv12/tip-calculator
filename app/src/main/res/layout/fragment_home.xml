@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameHome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/ammountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="164dp"
+            android:text="Amount: "
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/myBaseAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="152dp"
+            android:ems="10"
+            android:hint="Enter Bill..."
+            android:inputType="numberDecimal"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/ammountLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tipLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="44dp"
+            android:text="0%"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ammountLabel" />
+
+        <SeekBar
+            android:id="@+id/mySeekBar"
+            android:layout_width="247dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintStart_toEndOf="@+id/tipLabel"
+            app:layout_constraintTop_toBottomOf="@+id/myBaseAmount" />
+
+        <TextView
+            android:id="@+id/tipAmountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="220dp"
+            android:text="Tip:"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipLabel" />
+
+        <TextView
+            android:id="@+id/totalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="28dp"
+            android:text="Total:"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipAmountLabel" />
+
+        <TextView
+            android:id="@+id/myTip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="224dp"
+            android:text="$0.0"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tipAmountLabel"
+            app:layout_constraintTop_toBottomOf="@+id/mySeekBar" />
+
+        <TextView
+            android:id="@+id/myTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="28dp"
+            android:text="$0.0"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/totalLabel"
+            app:layout_constraintTop_toBottomOf="@+id/myTip" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
