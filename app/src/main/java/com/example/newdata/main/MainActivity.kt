@@ -1,4 +1,4 @@
-package com.example.newdata
+package com.example.newdata.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import com.example.newdata.AppDatabase
+import com.example.newdata.home.HomeActivity
+import com.example.newdata.User
 import com.example.newdata.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
