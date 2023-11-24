@@ -1,10 +1,12 @@
-package com.example.newdata
+package com.example.newdata.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.example.newdata.home.HomeActivity
+import com.example.newdata.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsActivity : AppCompatActivity() {
@@ -35,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId){
                 R.id.myHome -> {
-                    val Intent = Intent(this,HomeActivity::class.java).also{
+                    val Intent = Intent(this, HomeActivity::class.java).also{
                         it.putExtra("HomeUsername",myUserName.toString())
                         it.putExtra("HomeID",myId.toString())
                         startActivity(it)
@@ -46,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.myInvite -> {
-                    val Intent = Intent(this,InviteActivity::class.java)
+                    val Intent = Intent(this, InviteActivity::class.java)
                     startActivity(Intent)
                     finish()
                     true
