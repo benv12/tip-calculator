@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                     ) {
 
                     }
-
+                    //text observer
                     override fun onTextChanged(
                         s: CharSequence?,
                         start: Int,
