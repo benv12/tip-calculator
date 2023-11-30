@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.room.Database
 import com.example.newdata.AppDatabase
 import com.example.newdata.home.HomeActivity
 import com.example.newdata.User
+import com.example.newdata.UserDao
 import com.example.newdata.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var appDb : AppDatabase
+    private var userArray = Array(20){""}
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         appDb = AppDatabase.getDatabase(this)
 
                 binding.btnLogin.setEnabled(false)
+
+                getUserNames()
 
                 binding.myPassword.addTextChangedListener(object: TextWatcher{
                     override fun beforeTextChanged(
@@ -58,12 +63,14 @@ class MainActivity : AppCompatActivity() {
 
                 binding.btnLogin.setOnClickListener {
                     val username = binding.myUsername.text.toString()
-                    val ID = binding.myRollnum.text.toString()
+
                     writeData()
 
                     val Intent = Intent(this, HomeActivity::class.java).also {
-                        it.putExtra("username", username)
-                        it.putExtra("ID", ID)
+                        it.putExtra("passUsername", username)
+                        //it.putExtra("ID", ID)
+                        it.putExtra("passData", userArray)
+
                         startActivity(it)
                     }
                     // startActivity(Intent)
@@ -87,12 +94,11 @@ class MainActivity : AppCompatActivity() {
 
         val userName = binding.myUsername.text.toString()
         val passWord = binding.myPassword.text.toString()
-        val rollNo = binding.myRollnum.text.toString()
 
-        if(userName.isNotEmpty() && passWord.isNotEmpty() && rollNo.isNotEmpty()){
+        if(userName.isNotEmpty() && passWord.isNotEmpty()){
 
             val user= User(
-                null,userName,passWord,rollNo.toInt()
+                null,userName,passWord,null
             )
             GlobalScope.launch(Dispatchers.IO){
 
@@ -102,11 +108,20 @@ class MainActivity : AppCompatActivity() {
 
             binding.myUsername.text.clear()
             binding.myPassword.text.clear()
-            binding.myRollnum.text.clear()
 
             Toast.makeText(this@MainActivity,"Successfully written",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this@MainActivity,"Please Enter Data",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getUserNames(){
+        GlobalScope.launch {
+            val temp: Array<String> = appDb.userDao().getUserNames()
+            if(temp!=null) {
+                userArray = temp
+
+            }
         }
     }
 

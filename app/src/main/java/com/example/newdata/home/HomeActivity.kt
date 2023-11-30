@@ -6,62 +6,73 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newdata.R
+import com.example.newdata.databinding.ActivityHomeBinding
 import com.example.newdata.main.InviteActivity
 import com.example.newdata.main.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var myBill: EditText
-    private lateinit var tipPercent: TextView
-    private lateinit var SeekBarPercent: SeekBar
-    private lateinit var tvTip: TextView
-    private lateinit var tvBill: TextView
-    private lateinit var btn15: Button
-    private lateinit var btn20: Button
-    private lateinit var btn25: Button
-    private lateinit var btn30: Button
-    private lateinit var tv_username: TextView
+    private lateinit var binding: ActivityHomeBinding
+    private var split = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        myBill = findViewById(R.id.myBill)
-        tipPercent = findViewById(R.id.tipPercent)
-        SeekBarPercent = findViewById(R.id.SeekBarPercent)
-        tvTip = findViewById(R.id.tvTip)
-        tvBill = findViewById(R.id.tvBill)
-        btn15 = findViewById(R.id.btn15)
-        btn20 = findViewById(R.id.btn20)
-        btn25 = findViewById(R.id.btn25)
-        btn30 = findViewById(R.id.btn30)
-        tv_username = findViewById(R.id.tv_username)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val myUserName = intent.getStringExtra("username")
-        val myId = intent.getStringExtra("ID")
-        val settingsUsername = intent.getStringExtra("HomeUsername")
-        val setttingsID = intent.getStringExtra("HomeID")
 
-        if(settingsUsername.equals(null)&&setttingsID.equals(null)){
-            tv_username.text = myUserName.toString()+"#"+myId.toString()
-        }
-        if(myUserName.equals(null)&&myId.equals(null)){
-            tv_username.text = settingsUsername.toString()+"#"+setttingsID.toString()
+        //gets the input from main activity
+        val myUserName = intent.getStringExtra("passUsername")
+
+
+
+        val passData = intent.getStringArrayExtra("passData")
+        val temp = Array(20){""}
+        if(passData!=null){
+            for(i in 0..passData.size-1){
+                temp[i]=passData[i]
+            }
         }
 
 
 
-        SeekBarPercent.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        val usernames = Array(20){""}
+
+        val InviteListView = intent.getStringArrayExtra("ListViewUser")
+        val count = intent.getIntExtra("Counter", 0)
+        split = count+1
+
+        if(InviteListView!=null) {
+            for (i in 0..InviteListView.size-1) {
+                usernames[i] = InviteListView[i]
+            }
+        }
+
+
+        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(
+            this, android.R.layout.simple_list_item_1,
+            usernames
+        )
+        binding.myListView.isVerticalScrollBarEnabled
+        binding.myListView.adapter = arrayAdapter
+
+
+        binding.tvUsername.text = myUserName.toString()
+        //tv_username.text = myUserName.toString()
+
+        binding.SeekBarPercent.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(ContentValues.TAG, "onProgressChanged $progress")
-                tipPercent.text = "$progress%"
+                binding.tipPercent.text = "$progress%"
                 compute()
             }
 
@@ -74,7 +85,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
         })
-        myBill.addTextChangedListener(object: TextWatcher {
+        binding.myBill.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -88,56 +99,48 @@ class HomeActivity : AppCompatActivity() {
                 compute()
             }
         })
-        btn15.setOnClickListener{
-            SeekBarPercent.progress = 15
+        binding.btn15.setOnClickListener{
+            binding.SeekBarPercent.progress = 15
         }
-        btn20.setOnClickListener{
-            SeekBarPercent.progress = 20
+        binding.btn20.setOnClickListener{
+            binding.SeekBarPercent.progress = 20
         }
-        btn25.setOnClickListener{
-            SeekBarPercent.progress = 25
+        binding.btn25.setOnClickListener{
+            binding.SeekBarPercent.progress = 25
         }
-        btn30.setOnClickListener{
-            SeekBarPercent.progress = 30
+        binding.btn30.setOnClickListener{
+            binding.SeekBarPercent.progress = 30
         }
 
+        binding.bottomNavigationView.setSelectedItemId(R.id.myHome)
 
-
-
-
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView)
-
-        bottomNavigationView.setSelectedItemId(R.id.myHome)
-
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+        binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId){
                 R.id.myHome -> {
 
                     true
                 }
                 R.id.myInvite -> {
-                    val Intent = Intent(this, InviteActivity::class.java)
-                    startActivity(Intent)
-                    finish()
-                    true
-                }
-                R.id.mySettings -> {
-                    val Intent = Intent(this, SettingsActivity::class.java).also{
-                        if(settingsUsername.equals(null)&&setttingsID.equals(null)){
-                            it.putExtra("SettingUsername",myUserName.toString())
-                            it.putExtra("SettingID",myId.toString())
-                        }
-                        if(myUserName.equals(null)&&myId.equals(null)){
-                            it.putExtra("SettingUsername",settingsUsername.toString())
-                            it.putExtra("SettingID",setttingsID.toString())
-                        }
+                    val Intent = Intent(this, InviteActivity::class.java).also{
 
+                        it.putExtra("passUsername", myUserName)
+                        it.putExtra("passData", temp)
                         startActivity(it)
                         finish()
                     }
-                    //startActivity(Intent)
-                    //finish()
+
+                    true
+                }
+                R.id.mySettings -> {
+
+                    val Intent = Intent(this, SettingsActivity::class.java).also{
+
+                        it.putExtra("passUsername", myUserName)
+                        it.putExtra("passData", temp)
+                        startActivity(it)
+                        finish()
+                    }
+
                     true
                 }
                 else -> false
@@ -146,18 +149,24 @@ class HomeActivity : AppCompatActivity() {
 
     }
     private fun compute(){
-        if(myBill.text.isEmpty()){
-            tvTip.text = "$0.0"
-            tvBill.text = "$0.0"
+        if(binding.myBill.text.isEmpty()){
+            binding.tvTip.text = "$0.0"
+            binding.tvBill.text = "$0.0"
+            binding.tvSplit.text = "$0.0"
             return
         }
-        val bill = myBill.text.toString().toDouble()
-        val tip = SeekBarPercent.progress
+        val bill = binding.myBill.text.toString().toDouble()
+        val tip = binding.SeekBarPercent.progress
 
         val tipAmount = bill * tip / 100
-        val total = bill + tipAmount
+        val total = (bill + tipAmount)
+        var splitBill = (bill + tipAmount)
+        if(split!=0) {
+            splitBill = (bill + tipAmount) / split
+        }
 
-        tvTip.text = "$%.2f".format(tipAmount)
-        tvBill.text = "$%.2f".format(total)
+        binding.tvTip.text = "$%.2f".format(tipAmount)
+        binding.tvBill.text = "$%.2f".format(total)
+        binding.tvSplit.text = "$%.2f".format(splitBill)
     }
 }
