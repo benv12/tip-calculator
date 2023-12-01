@@ -1,5 +1,46 @@
 <resources>
-    <string name="app_name">newData</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Tip Calculator</string>
+
+    <string name="user_id_title">User ID:</string>
+    <string name="password_title">Password:</string>
+    <string name="username_title">Username:</string>
+    <string name="username_title_input">Username: %s</string>
+    <string name="user_id_title_input">User Id: %s</string>
+    <string name="enter_guest_name_modal_title">Enter Guest Name Below</string>
+
+    <string name="password_hint">Enter Password</string>
+    <string name="username_hint">Enter Username</string>
+    <string name="enter_guest_name_modal_hint">Guest Name</string>
+
+    <string name="tip_title">Tip:</string>
+    <string name="total_title">Total:</string>
+    <string name="guest_number">Each Guest Owed:</string>
+    <string name="login">Log In/Sign In</string>
+    <string name="logout">Log Out</string>
+    <string name="user_id">User ID</string>
+    <string name="pay_it">PayIt</string>
+    <string name="clear">Clear</string>
+    <string name="enter">Enter</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+
+    <string name="enter_bill_hint">Enter Bill Amount</string>
+    <string name="enter_bill_title">Amount:</string>
+
+    <string name="add_guest_title">Add Guests to split the bill with!</string>
+    <string name="add_guest_action">Add Guests</string>
+
+    <string name="instructions">Enter the bill amount below and round to the nearest dollar. \nUsing the slider bar/preset % tip, you can set the desired percentage of how much you want to tip!</string>
+
+    <string name="error_user_login">Invalid Password/User does not Exist!</string>
+    <string name="message_successful_login">Log In Successful!</string>
+    <string name="message_successful_guest_add">Guest %s Added!</string>
+    <string name="message_successful_logout">Logged Out!</string>
+
+    <string name="amount_format">$%.2f</string>
+    <string name="zero_amount">$0.00</string>
+    <string name="fifteen_percent_tip">15%</string>
+    <string name="twenty_percent_tip">20%</string>
+    <string name="twenty_five_percent_tip">25%</string>
+    <string name="thirty_percent_tip">30%</string>
 </resources>

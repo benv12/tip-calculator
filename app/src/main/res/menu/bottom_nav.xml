@@ -5,18 +5,18 @@
         android:id="@+id/myHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_home_24"
+        android:icon="@drawable/ic_home_icon"
         android:title="Home" />
     <item
         android:id="@+id/myInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_person_add_24"
+        android:icon="@drawable/ic_add_guest_icon"
         android:title="Invite" />
     <item
         android:id="@+id/mySettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_settings_24"
+        android:icon="@drawable/ic_settings_icon"
         android:title="Settings" />
 </menu>
