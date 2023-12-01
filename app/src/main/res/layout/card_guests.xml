@@ -1,0 +1,65 @@
+<!-- res/layout/card_guests.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="guest"
+            type="com.example.newdata.model.GuestModel" />
+
+        <variable
+            name="viewmodel"
+            type="com.example.newdata.home.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/doubleSpacing">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing"
+            android:layout_marginStart="@dimen/spacing"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="@dimen/spacing" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:background="@drawable/ic_rectangle_stroke">
+
+                <TextView
+                    android:id="@+id/guest_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@{guest.guestName}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/action_remove_guest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Guest: Ely" />
+
+                <TextView
+                    android:id="@+id/action_remove_guest"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/remove"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Remove" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
