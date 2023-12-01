@@ -10,6 +10,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.viewModels
 import com.example.newdata.R
 import com.example.newdata.common.BaseFragment
+import com.example.newdata.common.Event
 import com.example.newdata.databinding.FragmentHomeBinding
 import com.example.newdata.home.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,17 +47,19 @@ class HomeFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.loadGuestsFromDatabase()
+        viewModel.isUserAdded.observe(viewLifecycleOwner) { setUserAdded(it) }
+        viewModel.guestCount.observe(viewLifecycleOwner) { setGuestCount(it) }
+    }
 
-        isCurrentUserAdded = viewModel.isUserAdded
-
-        if (!isCurrentUserAdded!!) {
-            viewModel.userName?.let {
-                viewModel.addGuest(it)
-                viewModel.setUserAdded(true)
+    private fun setUserAdded(event: Event<Boolean?>) {
+        event.contentIfNotHandled.let {
+            if (!it!!) {
+                viewModel.userName?.let { currentUser ->
+                    viewModel.addGuest(currentUser)
+                    viewModel.setUserAdded(true)
+                }
             }
         }
-
-        viewModel.guestCount.observe(viewLifecycleOwner) { setGuestCount(it) }
     }
 
     private fun setGuestCount(count: Int) {

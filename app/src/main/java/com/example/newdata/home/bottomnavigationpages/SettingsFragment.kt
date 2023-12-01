@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.newdata.R
 import com.example.newdata.common.BaseFragment
+import com.example.newdata.common.Event
 import com.example.newdata.common.SnackBarMessage
 import com.example.newdata.databinding.FragmentSettingsBinding
 import com.example.newdata.home.MainViewModel
@@ -18,8 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingsFragment: BaseFragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: MainViewModel by viewModels()
-
-    private var isCurrentUserAdded: Boolean? = false
 
     override fun getRoot(): View? {
         return binding.root
@@ -54,12 +53,17 @@ class SettingsFragment: BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        isCurrentUserAdded = viewModel.isUserAdded
+        viewModel.loadGuestsFromDatabase()
+        viewModel.isUserAdded.observe(viewLifecycleOwner) { setUserAdded(it) }
+    }
 
-        if (!isCurrentUserAdded!!) {
-            viewModel.userName?.let {
-                viewModel.addGuest(it)
-                viewModel.setUserAdded(true)
+    private fun setUserAdded(event: Event<Boolean?>) {
+        event.contentIfNotHandled.let {
+            if (!it!!) {
+                viewModel.userName?.let { currentUser ->
+                    viewModel.addGuest(currentUser)
+                    viewModel.setUserAdded(true)
+                }
             }
         }
     }
