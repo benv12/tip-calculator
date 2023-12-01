@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newdata.common.AppPreferences
+import com.example.newdata.common.Event
 import com.example.newdata.database.GuestListDataBaseHelper
 import com.example.newdata.model.GuestModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,21 +20,23 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     val userName: String? = _appPreferences.userName
     val userId: String? = _appPreferences.userId
-    val isUserAdded: Boolean? = _appPreferences.isUserAdded
 
     // Use the same variable name for consistency
     private val dbHelper = GuestListDataBaseHelper(context)
 
     private val _guestList = MutableLiveData<List<GuestModel>>()
     private val _guestCount = MutableLiveData<Int>()
+    private val _isUserAdded = MutableLiveData<Event<Boolean?>>()
 
     val guestList: LiveData<List<GuestModel>> = _guestList
     val guestCount: LiveData<Int> = _guestCount
+    val isUserAdded: LiveData<Event<Boolean?>> = _isUserAdded
 
     init {
         // Load guest list and count from the database when ViewModel is created
         loadGuestListFromDatabase()
         loadGuestCountFromDatabase()
+        isUserAdded()
     }
 
     fun loadGuestsFromDatabase() {
@@ -42,6 +45,10 @@ class MainViewModel @Inject constructor(
 
     fun setUserAdded(boolean: Boolean) {
         _appPreferences.isUserAdded = boolean
+    }
+
+    private fun isUserAdded() {
+        _isUserAdded.value = Event(_appPreferences.isUserAdded)
     }
 
     private fun loadGuestListFromDatabase() {

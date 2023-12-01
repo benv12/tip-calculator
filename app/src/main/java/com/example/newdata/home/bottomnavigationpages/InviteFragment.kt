@@ -49,7 +49,6 @@ class InviteFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.loadGuestsFromDatabase()
-
         viewModel.guestList.observe(viewLifecycleOwner) { setupList(it) }
     }
 
