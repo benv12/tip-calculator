@@ -45,6 +45,8 @@ class HomeFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadGuestsFromDatabase()
+
         isCurrentUserAdded = viewModel.isUserAdded
 
         if (!isCurrentUserAdded!!) {
@@ -54,7 +56,6 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        viewModel.loadGuestsFromDatabase()
         viewModel.guestCount.observe(viewLifecycleOwner) { setGuestCount(it) }
     }
 

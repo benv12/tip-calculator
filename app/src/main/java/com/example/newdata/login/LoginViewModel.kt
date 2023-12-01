@@ -41,10 +41,18 @@ class LoginViewModel @Inject constructor(
         )
 
         val isValid = if (cursor.moveToFirst()) {
-            // User exists, check password
-            val storedPassword =
-                cursor.getString(cursor.getColumnIndex(UserAccountDataBaseHelper.COLUMN_PASSWORD))
-            password == storedPassword
+            var isValidPassword = false
+            do {
+                // Iterate over each user found with the given username
+                val storedPassword =
+                    cursor.getString(cursor.getColumnIndex(UserAccountDataBaseHelper.COLUMN_PASSWORD))
+                if (password == storedPassword) {
+                    // Password matches for one of the users, consider it valid
+                    isValidPassword = true
+                    break // exit the loop once a match is found
+                }
+            } while (cursor.moveToNext())
+            isValidPassword
         } else {
             // User does not exist, create the user
             createUser(username, password, userId)
@@ -62,6 +70,29 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun clearUserDatabase(onResult: (Boolean) -> Unit) {
+        try {
+            // Open the writable database
+            val writableDb = dbHelper.writableDatabase
+
+            // Specify the table to delete records from
+            val table = UserAccountDataBaseHelper.TABLE_NAME
+
+            // Delete all rows
+            val rowsDeleted = writableDb.delete(table, null, null)
+
+            // Close the database
+            writableDb.close()
+
+            // Notify the result based on the number of rows deleted
+            onResult(rowsDeleted > 0)
+        } catch (e: Exception) {
+            // Handle any exceptions, log or notify as needed
+            onResult(false)
+        }
+    }
+
+
     private fun createUser(username: String, password: String, userId: String) {
         val values = ContentValues().apply {
             put(UserAccountDataBaseHelper.COLUMN_ID, userId)
@@ -71,5 +102,4 @@ class LoginViewModel @Inject constructor(
         db.insert(UserAccountDataBaseHelper.TABLE_NAME, null, values)
     }
 
-    // Other functions...
 }

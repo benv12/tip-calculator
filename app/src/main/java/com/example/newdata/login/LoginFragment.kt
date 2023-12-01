@@ -37,7 +37,11 @@ class LoginFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Set up TextWatcher for username EditText
+
+        setupListeners()
+    }
+
+    private fun setupListeners() {// Set up TextWatcher for username EditText
         _binding.username.addTextChangedListener(createTextWatcher())
 
         // Set up TextWatcher for userPassword EditText
@@ -45,6 +49,16 @@ class LoginFragment: BaseFragment() {
 
         // Set up TextWatcher for userId EditText
         _binding.userId.addTextChangedListener(createTextWatcher())
+
+        _binding.actionClearUserDatabase.setOnClickListener {
+            _viewModel.clearUserDatabase { success ->
+                if (success) {
+                    showSnackBar(SnackBarMessage(getString(R.string.message_successful_database_clear)))
+                } else {
+                    showSnackBar(SnackBarMessage(getString(R.string.error_database_clear)))
+                }
+            }
+        }
 
         _binding.actionLogin.setOnClickListener {
             val username = _binding.username.text.toString()
@@ -70,8 +84,8 @@ class LoginFragment: BaseFragment() {
         _binding.actionClear.setOnClickListener {
             clearFields()
         }
-    }
 
+    }
 
     private fun createTextWatcher(): TextWatcher {
         return object : TextWatcher {
@@ -93,12 +107,14 @@ class LoginFragment: BaseFragment() {
     private fun updateButtonState() {
         val usernameEmpty = _binding.username.text.isNullOrEmpty()
         val passwordEmpty = _binding.userPassword.text.isNullOrEmpty()
-        val userIdEmpty = _binding.userId.text.isNullOrEmpty()
+        val userIdText = _binding.userId.text
+        val userIdInvalidLength = userIdText.isNullOrEmpty() || userIdText.length != 7
 
-        // Disable buttons if any of the fields are empty
-        _binding.actionLogin.isEnabled = !(usernameEmpty || passwordEmpty || userIdEmpty)
-        _binding.actionClear.isEnabled = !(usernameEmpty && passwordEmpty && userIdEmpty)
+        // Disable buttons if any of the fields are empty or invalid
+        _binding.actionLogin.isEnabled = !(usernameEmpty || passwordEmpty || userIdInvalidLength)
+        _binding.actionClear.isEnabled = !(usernameEmpty && passwordEmpty && userIdInvalidLength)
     }
+
 
     private fun clearFields() {
         // Clear EditText fields

@@ -30,13 +30,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline"
+            android:foregroundGravity="center"
             app:layout_constraintBottom_toTopOf="@id/horizontal_guideline" >
 
             <Button
                 android:id="@+id/action_tip_fifteen_percent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/doubleSpacing"
                 android:text="@string/fifteen_percent_tip"
@@ -45,32 +45,44 @@
 
             <Button
                 android:id="@+id/action_tip_twenty_percent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/twenty_percent_tip"
                 android:layout_margin="@dimen/doubleSpacing"
                 app:layout_constraintStart_toEndOf="@+id/action_tip_fifteen_percent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/action_tip_twenty_five_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/twenty_five_percent_tip"
-                android:layout_margin="@dimen/doubleSpacing"
-                app:layout_constraintStart_toEndOf="@+id/action_tip_twenty_percent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/action_tip_30_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/thirty_percent_tip"
-                android:layout_margin="@dimen/doubleSpacing"
-                app:layout_constraintStart_toEndOf="@+id/action_tip_twenty_five_percent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_container_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guideline" >
+
+        <Button
+            android:id="@+id/action_tip_twenty_five_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/twenty_five_percent_tip"
+            android:layout_margin="@dimen/doubleSpacing"
+            app:layout_constraintEnd_toStartOf="@id/action_tip_30_percent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/action_tip_30_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/thirty_percent_tip"
+            android:layout_margin="@dimen/doubleSpacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             style="@style/TextAppearance.AppCompat.Headline"
@@ -80,7 +92,8 @@
             android:text="@string/instructions"
             android:textSize="15sp"
             android:padding="15dp"
-            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:layout_marginBottom="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bill_amount"
             app:layout_constraintEnd_toEndOf="parent"/>

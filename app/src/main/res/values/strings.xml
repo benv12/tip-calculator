@@ -20,12 +20,13 @@
     <string name="user_id">User ID</string>
     <string name="pay_it">PayIt</string>
     <string name="clear">Clear</string>
+    <string name="clear_user_database">Reset User Database</string>
     <string name="enter">Enter</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Remove</string>
 
     <string name="enter_bill_hint">Enter Bill Amount</string>
-    <string name="enter_bill_title">Amount:</string>
+    <string name="enter_bill_title">Amount</string>
 
     <string name="add_guest_title">Add Guests to split the bill with!</string>
     <string name="add_guest_action">Add Guests</string>
@@ -33,9 +34,11 @@
     <string name="instructions">Enter the bill amount below and round to the nearest dollar. \nUsing the slider bar/preset % tip, you can set the desired percentage of how much you want to tip!</string>
 
     <string name="error_user_login">Invalid Password/User does not Exist!</string>
+    <string name="error_database_clear">User Database is already empty!</string>
     <string name="message_successful_login">Log In Successful!</string>
     <string name="message_successful_guest_add">Guest %s Added!</string>
     <string name="message_successful_logout">Logged Out!</string>
+    <string name="message_successful_database_clear">Cleared User Database!</string>
 
     <string name="amount_format">$%.2f</string>
     <string name="zero_amount">$0.00</string>
